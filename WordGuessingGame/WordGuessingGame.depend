@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1748604853 source:c:\users\salman\downloads\compiler construction lab\wordguessinggame\main.cpp
+	<iostream>
+	<cstdlib>
+	<cstring>
+	<windows.h>
+	<fstream>
+

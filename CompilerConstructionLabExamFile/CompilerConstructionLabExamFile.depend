@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1735279828 source:c:\users\salman\downloads\compiler construction lab\compilerconstructionlabexamfile\main.cpp
+	<iostream>
+	<string>
+	<memory>
+	<stdexcept>
+
