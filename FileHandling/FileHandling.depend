@@ -1,0 +1,9 @@
+# depslib dependency file v1.0
+1731938135 source:c:\users\salman\downloads\compiler construction lab\filehandling\main.cpp
+	<iostream>
+	<fstream>
+	<string>
+	<iostream>
+	<fstream>
+	<string>
+
