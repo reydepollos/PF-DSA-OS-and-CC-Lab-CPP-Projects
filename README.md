@@ -49,4 +49,4 @@ The projects are organized according to the respective subjects and demonstrate 
 ## 🛠️ How to Run
 1. Clone the repository:
    ```bash
-   git clone https://github.com/SalmanSaleem-17/PF-DSA-OS-and-CC-Lab-Projects.git
+   git clone https://github.com/SalmanSaleem-17/PF-DSA-OS-and-CC-Lab-CPP-Projects
