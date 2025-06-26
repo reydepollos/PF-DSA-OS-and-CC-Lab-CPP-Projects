@@ -1,0 +1,21 @@
+#include <iostream>  // Required for input/output operations
+using namespace std;
+
+int main() {
+    int number;  // Variable to store the user's input
+
+    // Asking the user to input a number
+    cout << "Enter an integer: ";
+    cin >> number;  // Reading the number from user
+
+    // Checking if the number is even or odd using the modulus operator
+    if (number % 2 == 0) {
+        // If the remainder when divided by 2 is zero, it's an even number
+        cout << number << " is even." << endl;
+    } else {
+        // If the remainder is not zero, it's an odd number
+        cout << number << " is odd." << endl;
+    }
+
+    return 0;  // Program ends successfully
+}

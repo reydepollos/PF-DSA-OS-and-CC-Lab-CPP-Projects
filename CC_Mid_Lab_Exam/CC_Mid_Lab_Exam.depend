@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1729870196 source:c:\users\salman\downloads\compiler construction lab\cc_mid_lab_exam\main.cpp
+	<iostream>
+	<fstream>
+	<cctype>
+

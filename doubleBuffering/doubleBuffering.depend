@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1728034858 source:c:\users\salman\downloads\compiler construction lab\doublebuffering\main.cpp
+	<iostream>
+	<fstream>
+	<cctype>
+

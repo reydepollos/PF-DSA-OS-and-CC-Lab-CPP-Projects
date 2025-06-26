@@ -1,0 +1,127 @@
+#include <iostream>
+#include <fstream>
+
+using namespace std;
+
+enum State {
+    CODE,
+    SINGLE_LINE_COMMENT,
+    MULTI_LINE_COMMENT,
+    MULTI_LINE_ASTERISK     // Asterisk inside a multi-line comment, possible end
+};
+
+// Transition function to handle state changes
+State transition(State currentState, char currentChar, char nextChar) {
+    switch (currentState) {
+        case CODE:
+            if (currentChar == '/' && nextChar == '/') {
+                return SINGLE_LINE_COMMENT;  // Transition to single-line comment
+            }
+            if (currentChar == '/' && nextChar == '*') {
+                return MULTI_LINE_COMMENT;   // Transition to multi-line comment
+            }
+            return CODE;  // Remain in CODE
+
+        case SINGLE_LINE_COMMENT:
+            if (currentChar == '\n') {
+                return CODE;  // End of single-line comment
+            }
+            return SINGLE_LINE_COMMENT;  // Stay in single-line comment
+
+        case MULTI_LINE_COMMENT:
+            if (currentChar == '*' && nextChar == '/') {
+                return CODE;  // End of multi-line comment
+            }
+            if (currentChar == '*') {
+                return MULTI_LINE_ASTERISK;  // Possible end of multi-line comment
+            }
+            return MULTI_LINE_COMMENT;  // Stay in multi-line comment
+
+        case MULTI_LINE_ASTERISK:
+            if (currentChar == '/') {
+                return CODE;  // End of multi-line comment
+            }
+            if (currentChar == '*') {
+                return MULTI_LINE_ASTERISK;  // Stay in multi-line asterisk state
+            }
+            return MULTI_LINE_COMMENT;  // Go back to multi-line comment
+    }
+    return CODE;  // Default to CODE state
+}
+
+// Function to print the contents of a file
+void printFileContents(const char* filePath) {
+    ifstream file(filePath);
+    if (!file.is_open()) {
+        cerr << "Error: Could not open file " << filePath << endl;
+        return;
+    }
+    cout << "\n\n====================================";
+    cout << "\nContents of " << filePath << ":\n";
+    cout << "====================================\n";
+
+    string line;
+    while (getline(file, line)) {
+        cout << line << endl;
+    }
+
+    cout << "====================================\n";
+    file.close();
+}
+
+int main() {
+    const char* inputFilePath = "CodeWithComments.txt";    // Input file with comments
+    const char* outputFilePath = "CodeWithoutComments.cpp"; // Output file without comments
+
+    ifstream inputFile(inputFilePath);
+    ofstream outputFile(outputFilePath);
+
+    if (!inputFile.is_open() || !outputFile.is_open()) {
+        cerr << "Error: Could not open input or output file!" << endl;
+        return 1;
+    }
+
+    char currentChar;
+    char nextChar;
+    State state = CODE;  // Start in CODE state
+
+    while (inputFile.get(currentChar)) {
+        // Peek the next character to determine transitions
+        nextChar = inputFile.peek();
+
+        // Use the transition table to decide the next state
+        State nextState = transition(state, currentChar, nextChar);
+
+        // Handle actions based on the state
+        switch (state) {
+            case CODE:
+                if (nextState == CODE) {
+                    outputFile.put(currentChar);  // Write code to output file
+                }
+                break;
+
+            case SINGLE_LINE_COMMENT:
+                if (nextState == CODE) {
+                    outputFile.put(currentChar);  // Newline character, back to code
+                }
+                break;
+
+            case MULTI_LINE_COMMENT:
+            case MULTI_LINE_ASTERISK:
+                // Ignore characters inside multi-line comments
+                break;
+        }
+
+        // Move to the next state
+        state = nextState;
+    }
+
+    inputFile.close();
+    outputFile.close();
+
+    cout << "\nComments removed successfully. Clean code written to " << outputFilePath << endl;
+    printFileContents(inputFilePath);
+    printFileContents(outputFilePath);
+
+    return 0;
+}
